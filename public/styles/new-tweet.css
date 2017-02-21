@@ -1,0 +1,52 @@
+.new-tweet {
+  background: #eee;
+  border: 1px solid #a9a9a9;
+  border-radius: 5px;
+  left: 0;
+  padding: 1em;
+  right: 0;
+}
+
+
+.new-tweet form:before,
+
+.new-tweet form:after {
+  content: "";
+  display: table;
+}
+
+.new-tweet form:after {
+  clear:both;
+}
+
+.new-tweet form {
+  *zoom: 1;
+}
+
+.new-tweet h2 {
+  border-bottom: 1px solid #000000;
+  margin: 0;
+}
+
+.new-tweet input {
+  bottom: -5px;
+  float: left;
+  position: relative;
+}
+
+.new-tweet span {
+  bottom: -10px;
+  float: right;
+  font-style: italic;
+  position: relative;
+}
+
+.new-tweet textarea {
+  left: 0;
+  margin: auto;
+  margin-top: 15px;
+  padding: 10px;
+  right: 0;
+  width: 100%;
+}
+

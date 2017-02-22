@@ -77,9 +77,10 @@ $(document).ready(function() {
     const $handle = $("<div>").addClass("handle").text(tweetData.user.handle);
     const $header = $("<header>").append($avatar, $name, $handle);
     const $p = $("<p>").text(tweetData.content.text);
-    const $date = $("<div>").addClass("date").text(new Date(tweetData.created_at).getDay());
-    const icons = ['flag', 'retweet', 'heart'];
+    console.log(tweetData["created_at"]);
+    const $date = $("<div>").addClass("date").text(Math.floor((Date.now() - tweetData["created_at"]) / 86400000) + " days ago");
     const $icons = $("<div>").addClass("icons");
+    const icons = ['flag', 'retweet', 'heart'];
     for (let icon of icons) {
       $icons.append($("<i>").addClass(`fa fa-${icon} fa-lg`).attr("aria-hidden", true));
     }
@@ -100,4 +101,19 @@ $(document).ready(function() {
   $('#tweets-container').prepend($tweet);
   renderTweets(data);
 
+
+  $('input').on('click', function() {
+    event.preventDefault();
+    let data = $( "textarea, input" ).serialize();
+    console.log(data);
+    $.ajax({
+      url: '/tweets',
+      method: 'POST',
+      data: data,
+      success: function (data) {
+        console.log('hello');
+        // $button.replaceWith(morePostsHtml);
+      }
+    });
+  });
 });

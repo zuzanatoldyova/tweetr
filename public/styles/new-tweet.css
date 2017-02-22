@@ -42,6 +42,10 @@
   position: relative;
 }
 
+.new-tweet input:focus textarea button {
+  box-shadow: 0 0 5px rgb(81, 203, 238);
+}
+
 .new-tweet textarea {
   left: 0;
   margin: auto;

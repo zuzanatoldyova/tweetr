@@ -11,16 +11,28 @@
   z-index: 5;
 }
 
-#nav-bar .logo{
+#nav-bar button {
+  border-radius: 5px;
+  border: solid 1px #000000;
+  background-color: #e8fdff;
+  color: #00a087;
+  float: right;
+  font-size: 32px;
+  margin-top: 5px;
+  padding: 0.5em;
+}
+
+#nav-bar .logo {
   float: left;
   height: 80px;
   width: 80px;
 }
 
-#nav-bar .header{
+#nav-bar .header {
   float: left;
   font-size: 32px;
   left: 10px;
   line-height: 80px;
   padding: 0 0 0 10px;
 }
+

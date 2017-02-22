@@ -9,7 +9,7 @@ $(document).ready(function() {
     $counter.text(remainingCharacters);
     // $counter.css('color', remainingCharacters < 0 ? 'red' : 'black');
     if (remainingCharacters < 0) {
-      $('.counter').addClass('red');
+      $counter.addClass('red');
     }
   });
 });

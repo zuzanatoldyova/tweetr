@@ -6,70 +6,14 @@
  */
 $(document).ready(function() {
 
+  $(function() {
+    $('.new-tweet').toggle();
+  });
 
-  // var tweetData = {
-  //   "user": {
-  //     "name": "Newton",
-  //     "avatars": {
-  //       "small": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-  //       "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-  //       "large": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-  //     },
-  //     "handle": "@SirIsaac"
-  //   },
-  //   "content": {
-  //     "text": "If I have seen further it is by standing on the shoulders of giants"
-  //   },
-  //   "created_at": 1461116232227
-  // };
-
-  // var data = [
-  //   {
-  //     "user": {
-  //       "name": "Newton",
-  //       "avatars": {
-  //         "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-  //         "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-  //         "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-  //       },
-  //       "handle": "@SirIsaac"
-  //     },
-  //     "content": {
-  //       "text": "If I have seen further it is by standing on the shoulders of giants"
-  //     },
-  //     "created_at": 1461116232227
-  //   },
-  //   {
-  //     "user": {
-  //       "name": "Descartes",
-  //       "avatars": {
-  //         "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-  //         "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-  //         "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-  //       },
-  //       "handle": "@rd" },
-  //     "content": {
-  //       "text": "Je pense , donc je suis"
-  //     },
-  //     "created_at": 1461113959088
-  //   },
-  //   {
-  //     "user": {
-  //       "name": "Johann von Goethe",
-  //       "avatars": {
-  //         "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-  //         "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-  //         "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-  //       },
-  //       "handle": "@johann49"
-  //     },
-  //     "content": {
-  //       "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-  //     },
-  //     "created_at": 1461113796368
-  //   }
-  // ];
-
+  $('#nav-bar button').click(function () {
+    $('.new-tweet').slideToggle("slow");
+    $('.new-tweet textarea').focus();
+  });
 
   function createTweetElement(tweetData) {
     const $avatar = $("<img>").attr("src", tweetData.user.avatars.small);
@@ -94,36 +38,43 @@ $(document).ready(function() {
     }
   }
 
-  // var $tweet = createTweetElement(tweetData);
-  // console.log($tweet);
-  // $('#tweets-container').prepend($tweet);
-  // renderTweets(data);
-
-
-  $('input').on('click', function() {
-    event.preventDefault();
-    let data = $( "textarea, input" ).serialize();
-    console.log(data);
-    $.ajax({
-      url: '/tweets',
-      method: 'POST',
-      data: data,
-      success: function (data) {
-        console.log('hello');
-      }
-    });
-  });
 
   function loadTweets() {
     $.ajax({
       url: '/tweets',
-      method: 'GET',
-      success: function (data, status) {
-        console.log(data, status);
-        renderTweets(data);
-      }
+      method: 'GET'
+    }).then(function (data) {
+      renderTweets(data);
+    }).fail(function(err) {
+      alert('An error occured', err);
     });
   }
 
+
+  $('.new-tweet').on('submit', 'form', function() {
+    event.preventDefault();
+    let $counter = $(this).children('.counter');
+    let $textarea = $(this).children('textarea');
+    if ($counter.hasClass('red')) {
+      alert('tweet is too long, maximum length is 140 characters');
+    } else if($textarea.val().length){
+      let data = $('textarea').serialize();
+      $textarea.val('');
+      $counter.text('140');
+      $.ajax({
+        url: '/tweets',
+        method: 'POST',
+        data: data
+      }).then(function(data) {
+        loadTweets();
+      }).fail(function(err) {
+        alert('An error occured', err);
+      });
+    } else {
+      alert('tweet is empty');
+    }
+  });
+
   loadTweets();
+
 });

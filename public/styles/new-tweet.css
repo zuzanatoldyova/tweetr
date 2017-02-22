@@ -37,6 +37,7 @@
 .new-tweet span {
   bottom: -10px;
   float: right;
+  font-size: 13px;
   font-style: italic;
   position: relative;
 }

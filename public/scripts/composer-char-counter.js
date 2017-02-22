@@ -1,10 +1,14 @@
 $(document).ready(function() {
-  $('.new-tweet').on('keyup', 'textarea', function() {
-    $('.counter').removeClass('red');
-    var tweetLength = $(this).val().length;
-    $('.counter').text(140 - tweetLength);
-    if (Number($('.counter').text()) < 0) {
-      console.log('here');
+  const MAX_LENGTH = 140;
+  // let flagCounterError = false;
+  $('.new-tweet').on('input', 'textarea', function() {
+    let $counter = $(this).siblings('.counter');
+    $counter.removeClass('red');
+    let tweetLength = $(this).val().length;
+    let remainingCharacters = MAX_LENGTH - tweetLength;
+    $counter.text(remainingCharacters);
+    // $counter.css('color', remainingCharacters < 0 ? 'red' : 'black');
+    if (remainingCharacters < 0) {
       $('.counter').addClass('red');
     }
   });

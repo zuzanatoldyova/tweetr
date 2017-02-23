@@ -44,7 +44,7 @@ $(document).ready(function() {
       method: 'GET'
     }).then(function (data) {
       renderTweets(data);
-    }).fail(function(err) {
+    }).catch(function(err) {
       alert('An error occured', err);
     });
   }
@@ -66,7 +66,7 @@ $(document).ready(function() {
       }).then(function(data) {
         $('#tweets-container').empty();
         loadTweets();
-      }).fail(function(err) {
+      }).catch(function(err) {
         alert('An error occured', err);
       });
     } else {

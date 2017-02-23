@@ -38,7 +38,6 @@ $(document).ready(function() {
     }
   }
 
-
   function loadTweets() {
     $.ajax({
       url: '/tweets',
@@ -49,7 +48,6 @@ $(document).ready(function() {
       alert('An error occured', err);
     });
   }
-
 
   $('.new-tweet').on('submit', 'form', function() {
     event.preventDefault();
@@ -66,6 +64,7 @@ $(document).ready(function() {
         method: 'POST',
         data: data
       }).then(function(data) {
+        $('#tweets-container').empty();
         loadTweets();
       }).fail(function(err) {
         alert('An error occured', err);

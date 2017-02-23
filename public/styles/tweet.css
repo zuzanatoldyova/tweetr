@@ -15,6 +15,10 @@
   opacity: 1;
 }
 
+#tweets-container .tweet:hover {
+  border: 1px solid black;
+}
+
 #tweets-container .tweet:hover .icons {
   visibility: visible;
 }

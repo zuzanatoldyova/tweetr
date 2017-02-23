@@ -32,7 +32,7 @@ $(document).ready(function() {
   $('.new-tweet').toggle();
 
   $('#nav-bar button').click(function () {
-    $('.new-tweet').slideToggle("slow");
+    $('.new-tweet').slideToggle();
     $('.new-tweet textarea').focus();
   });
 

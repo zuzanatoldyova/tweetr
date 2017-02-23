@@ -1,7 +1,11 @@
 #nav-bar {
+  align-items: center;
   background: #00a087;
   color: #e8fdff;
+  display: flex;
+  flex-direction: row;
   height: 80px;
+  justify-content: space-between;
   left: 0;
   padding: 0 2em;
   position: fixed;
@@ -16,9 +20,7 @@
   border: solid 1px #000000;
   background-color: #e8fdff;
   color: #00a087;
-  float: right;
   font-size: 32px;
-  margin-top: 5px;
   padding: 0.5em;
 }
 
@@ -31,7 +33,6 @@
 #nav-bar .header {
   float: left;
   font-size: 32px;
-  left: 10px;
   line-height: 80px;
   padding: 0 0 0 10px;
 }

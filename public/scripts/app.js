@@ -4,39 +4,37 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-$(document).ready(function() {
 
-  $(function() {
-    $('.new-tweet').toggle();
-  });
+function createTweetElement(tweetData) {
+  const $avatar = $("<img>").attr("src", tweetData.user.avatars.small);
+  const $name = $("<div>").addClass("name").text(tweetData.user.name);
+  const $handle = $("<div>").addClass("handle").text(tweetData.user.handle);
+  const $header = $("<header>").append($avatar, $name, $handle);
+  const $p = $("<p>").text(tweetData.content.text);
+  const $date = $("<div>").addClass("date").text(Math.floor((Date.now() - tweetData["created_at"]) / 86400000) + " days ago");
+  const $icons = $("<div>").addClass("icons");
+  const icons = ['flag', 'retweet', 'heart'];
+  for (let icon of icons) {
+    $icons.append($("<i>").addClass(`fa fa-${icon} fa-lg`).attr("aria-hidden", true));
+  }
+  const $footer = $("<footer>").append($date, $icons);
+  const $tweet = $("<article>").addClass("tweet").append($header, $p, $footer);
+  return $tweet;
+}
+
+function renderTweets(data) {
+  for (let tweet in data) {
+    $('#tweets-container').prepend(createTweetElement(data[tweet]));
+  }
+}
+
+$(document).ready(function() {
+  $('.new-tweet').toggle();
 
   $('#nav-bar button').click(function () {
     $('.new-tweet').slideToggle("slow");
     $('.new-tweet textarea').focus();
   });
-
-  function createTweetElement(tweetData) {
-    const $avatar = $("<img>").attr("src", tweetData.user.avatars.small);
-    const $name = $("<div>").addClass("name").text(tweetData.user.name);
-    const $handle = $("<div>").addClass("handle").text(tweetData.user.handle);
-    const $header = $("<header>").append($avatar, $name, $handle);
-    const $p = $("<p>").text(tweetData.content.text);
-    const $date = $("<div>").addClass("date").text(Math.floor((Date.now() - tweetData["created_at"]) / 86400000) + " days ago");
-    const $icons = $("<div>").addClass("icons");
-    const icons = ['flag', 'retweet', 'heart'];
-    for (let icon of icons) {
-      $icons.append($("<i>").addClass(`fa fa-${icon} fa-lg`).attr("aria-hidden", true));
-    }
-    const $footer = $("<footer>").append($date, $icons);
-    const $tweet = $("<article>").addClass("tweet").append($header, $p, $footer);
-    return $tweet;
-  }
-
-  function renderTweets(data) {
-    for (let tweet in data) {
-      $('#tweets-container').prepend(createTweetElement(data[tweet]));
-    }
-  }
 
   function loadTweets() {
     $.ajax({

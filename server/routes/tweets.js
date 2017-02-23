@@ -13,6 +13,7 @@ module.exports = function(DataHelpers) {
         res.status(500).json({ error: err.message });
       } else {
         res.json(tweets);
+        db.close();
       }
     });
   });

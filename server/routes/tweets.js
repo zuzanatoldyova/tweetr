@@ -36,7 +36,6 @@ module.exports = function(DataHelpers) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        console.log(tweet);
         res.status(201).send();
       }
     });

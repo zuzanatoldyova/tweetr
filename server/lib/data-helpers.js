@@ -9,7 +9,6 @@ module.exports = function makeDataHelpers(db) {
 
     // Saves a tweet to `db`
     saveTweet: function(newTweet, callback) {
-      console.log(newTweet);
       db.collection("tweets").insertOne(newTweet, callback);
     },
 
@@ -18,7 +17,7 @@ module.exports = function makeDataHelpers(db) {
       db.collection("tweets").find().toArray(callback);
     },
 
-    // Updates tweet according to body of request
+    // Updates tweetlikes according to if it's already been liked or not
     likeTweet: function(tweetId, callback){
       let delta = 1;
       db.collection("tweets").find({_id: ObjectId(tweetId)}).toArray((err, result) => {

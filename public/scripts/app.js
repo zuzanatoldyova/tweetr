@@ -5,8 +5,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-
-
 $(document).ready(function() {
   $('.new-tweet').toggle();
 
@@ -15,8 +13,7 @@ $(document).ready(function() {
     $('.new-tweet textarea').focus();
   });
 
-
-
+  // Creates an html element class tweet
   function createTweetElement(tweetData) {
     const $avatar = $("<img>").attr("src", tweetData.user.avatars.small);
     const $name = $("<div>").addClass("name").text(tweetData.user.name);
@@ -47,13 +44,13 @@ $(document).ready(function() {
       url: '/tweets',
       method: 'GET'
     }).then(function (data) {
-      console.log(data);
       renderTweets(data);
     }).catch(function(err) {
       alert('An error occured', err);
     });
   }
 
+  // Validates a tweet text input and if it's valid creates an ajax request to post the tweet on the screen reloads all the tweets from database
   $('.new-tweet').on('submit', 'form', function() {
     event.preventDefault();
     let $counter = $(this).children('.counter');
@@ -79,13 +76,10 @@ $(document).ready(function() {
     }
   });
 
+  // Creates an ajax request to update the database after like button was clicked, reloads the tweeets database
   $('#tweets-container').on('click', '.fa-heart', function() {
     event.preventDefault();
     let id = $(this).parents('.tweet').data("id");
-    // let count = Number($(this).siblings('.likes-counter').text()) + 1;
-    // console.log(count);
-    // // let likes = "likes=" + count;
-    // console.log(id);
     $.ajax({
       url: `/tweets/${id}/likes`,
       method: 'POST',
@@ -93,14 +87,11 @@ $(document).ready(function() {
     }).then(function (data) {
       $('#tweets-container').empty();
       loadTweets();
-      // putTweetOnScreen(id);   // one crazy JH idea
     }).catch(function(err) {
       alert('An error occured', err);
     });
   });
 
+  // Initial load of the tweets
   loadTweets();
-
-
-
 });

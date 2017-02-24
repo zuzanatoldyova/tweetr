@@ -1,0 +1,79 @@
+@import "_mixins.scss";
+@import "_variables.scss";
+
+#tweets-container {
+
+  .tweet {
+  border: 1px solid #9a9a9a;
+  border-radius: 5px;
+  margin: 2em 0;
+
+    &:hover {
+      border: 1px solid black;
+
+      header {
+        opacity: 1;
+      }
+
+      .icons {
+        visibility: visible;
+      }
+    }
+
+
+  }
+
+  header {
+    background: #eee;
+    opacity: 0.6;
+    overflow: auto;
+    padding: 0.5em 0.5em 1em 1em;
+  }
+
+  i {
+    margin-left: 7px;
+  }
+
+  img {
+    border-radius: 5px;
+    float: left;
+    left: -5px;
+    position: relative;
+  }
+
+  footer {
+    @include clearfix;
+
+    border-top: 1px solid #9a9a9a;
+    font-size: 13px;
+    padding: 1em;
+  }
+
+  p {
+    padding: 2em 1em;
+  }
+
+  .date {
+    float: left;
+  }
+
+  .handle {
+    float: right;
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  .icons {
+    visibility: hidden;
+    float: right;
+    color: #1aa3ff;
+  }
+
+  .name {
+    font-size: 25px;
+    font-weight: bold;
+    float: left;
+    margin-left: 10px;
+  }
+}
+

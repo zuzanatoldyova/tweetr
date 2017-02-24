@@ -1,0 +1,53 @@
+@import "_variables.scss";
+@import "_mixins.scss";
+
+
+.new-tweet {
+  background: #eee;
+  border: 1px solid #a9a9a9;
+  border-radius: 5px;
+  left: 0;
+  padding: 1em;
+  right: 0;
+
+  form {
+    @include clearfix;
+    }
+
+  h2 {
+    border-bottom: 1px solid #000000;
+    margin: 0;
+  }
+
+  input {
+    bottom: -5px;
+    float: left;
+    position: relative;
+  }
+
+  span {
+    bottom: -10px;
+    float: right;
+    font-size: 13px;
+    font-style: italic;
+    position: relative;
+  }
+
+  textarea {
+    left: 0;
+    margin: auto;
+    margin-top: 15px;
+    padding: 10px;
+    resize: none;
+    right: 0;
+    width: 100%;
+
+    &:focus {
+      box-shadow: 0 0 5px rgb(81, 203, 238);
+    }
+  }
+}
+
+.red {
+  color: red;
+}

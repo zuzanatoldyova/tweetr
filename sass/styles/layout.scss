@@ -1,0 +1,27 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/*
+ * Global layout stuff
+ */
+
+body {
+  margin: 0;
+  color: #244751;
+  background-color: #eee;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+main {
+  background: white;
+  bottom: 0;
+  margin: auto;
+  margin-top: 100px;
+  overflow: auto;
+  padding: 2em;
+  width: 450px;
+}

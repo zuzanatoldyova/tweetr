@@ -15,6 +15,8 @@ $(document).ready(function() {
     $('.new-tweet textarea').focus();
   });
 
+
+
   function createTweetElement(tweetData) {
     const $avatar = $("<img>").attr("src", tweetData.user.avatars.small);
     const $name = $("<div>").addClass("name").text(tweetData.user.name);
@@ -22,7 +24,7 @@ $(document).ready(function() {
     const $header = $("<header>").append($avatar, $name, $handle);
     const $p = $("<p>").text(tweetData.content.text);
     const $date = $("<div>").addClass("date").text(Math.floor((Date.now() - tweetData["created_at"]) / 86400000) + " days ago");
-    const $counter = $("<span>").addClass("tweet-counter").text(0);
+    const $counter = $("<span>").addClass("likes-counter").text(tweetData.likes);
     const $icons = $("<div>").addClass("icons");
     const icons = ['flag', 'retweet', 'heart'];
     for (let icon of icons) {
@@ -45,6 +47,7 @@ $(document).ready(function() {
       url: '/tweets',
       method: 'GET'
     }).then(function (data) {
+      console.log(data);
       renderTweets(data);
     }).catch(function(err) {
       alert('An error occured', err);
@@ -58,7 +61,7 @@ $(document).ready(function() {
     if ($counter.hasClass('red')) {
       alert('tweet is too long, maximum length is 140 characters');
     } else if($textarea.val().length){
-      let data = $('textarea').serialize();
+      let data = $('textarea, .tweet-counter').serialize();
       $textarea.val('');
       $counter.text('140');
       $.ajax({
@@ -76,6 +79,28 @@ $(document).ready(function() {
     }
   });
 
+  $('#tweets-container').on('click', '.fa-heart', function() {
+    event.preventDefault();
+    let id = $(this).parents('.tweet').data("id");
+    // let count = Number($(this).siblings('.likes-counter').text()) + 1;
+    // console.log(count);
+    // // let likes = "likes=" + count;
+    // console.log(id);
+    $.ajax({
+      url: `/tweets/${id}/likes`,
+      method: 'POST',
+      data: `id=${id}`
+    }).then(function (data) {
+      $('#tweets-container').empty();
+      loadTweets();
+      // putTweetOnScreen(id);   // one crazy JH idea
+    }).catch(function(err) {
+      alert('An error occured', err);
+    });
+  });
+
   loadTweets();
+
+
 
 });

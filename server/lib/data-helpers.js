@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 var ObjectId = require('mongodb').ObjectId;
 // Simulates the kind of delay we see with network or filesystem operations
-const simulateDelay = require("./util/simulate-delay");
+const simulateDelay = require('./util/simulate-delay');
 
 // Defines helper functions for saving and getting tweets, using the database `db`
 module.exports = function makeDataHelpers(db) {
@@ -9,22 +9,22 @@ module.exports = function makeDataHelpers(db) {
 
     // Saves a tweet to `db`
     saveTweet: function(newTweet, callback) {
-      db.collection("tweets").insertOne(newTweet, callback);
+      db.collection('tweets').insertOne(newTweet, callback);
     },
 
     // Get all tweets in `db`, sorted by newest first
     getTweets: function(callback) {
-      db.collection("tweets").find().toArray(callback);
+      db.collection('tweets').find().toArray(callback);
     },
 
     // Updates tweetlikes according to if it's already been liked or not
     likeTweet: function(tweetId, callback){
       let delta = 1;
-      db.collection("tweets").find({_id: ObjectId(tweetId)}).toArray((err, result) => {
+      db.collection('tweets').find({_id: ObjectId(tweetId)}).toArray((err, result) => {
         if(result[0].likes > 0) {
           delta = -1;
         }
-        db.collection("tweets").update(
+        db.collection('tweets').update(
           {_id: ObjectId(tweetId)},
           { $inc: { likes: delta } },
           null,

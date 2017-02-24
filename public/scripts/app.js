@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 /*
  * Client-side JS logic goes here
  * jQuery is already loaded
@@ -15,21 +15,21 @@ $(document).ready(function() {
 
   // Creates an html element class tweet
   function createTweetElement(tweetData) {
-    const $avatar = $("<img>").attr("src", tweetData.user.avatars.small);
-    const $name = $("<div>").addClass("name").text(tweetData.user.name);
-    const $handle = $("<div>").addClass("handle").text(tweetData.user.handle);
-    const $header = $("<header>").append($avatar, $name, $handle);
-    const $p = $("<p>").text(tweetData.content.text);
-    const $date = $("<div>").addClass("date").text(Math.floor((Date.now() - tweetData["created_at"]) / 86400000) + " days ago");
-    const $counter = $("<span>").addClass("likes-counter").text(tweetData.likes);
-    const $icons = $("<div>").addClass("icons");
+    const $avatar = $('<img>').attr('src', tweetData.user.avatars.small);
+    const $name = $('<div>').addClass('name').text(tweetData.user.name);
+    const $handle = $('<div>').addClass('handle').text(tweetData.user.handle);
+    const $header = $('<header>').append($avatar, $name, $handle);
+    const $p = $('<p>').text(tweetData.content.text);
+    const $date = $('<div>').addClass('date').text(Math.floor((Date.now() - tweetData['created_at']) / 86400000) + ' days ago');
+    const $counter = $('<span>').addClass('likes-counter').text(tweetData.likes);
+    const $icons = $('<div>').addClass('icons');
     const icons = ['flag', 'retweet', 'heart'];
     for (let icon of icons) {
-      $icons.append($("<i>").addClass(`fa fa-${icon} fa-lg`).attr("aria-hidden", true));
+      $icons.append($('<i>').addClass(`fa fa-${icon} fa-lg`).attr('aria-hidden', true));
     }
     $icons.append($counter);
-    const $footer = $("<footer>").append($date, $icons);
-    const $tweet = $("<article>").addClass("tweet").data("id", tweetData._id).append($header, $p, $footer);
+    const $footer = $('<footer>').append($date, $icons);
+    const $tweet = $('<article>').addClass('tweet').data('id', tweetData._id).append($header, $p, $footer);
     return $tweet;
   }
 
@@ -57,7 +57,7 @@ $(document).ready(function() {
     let $textarea = $(this).children('textarea');
     if ($counter.hasClass('red')) {
       alert('tweet is too long, maximum length is 140 characters');
-    } else if($textarea.val().length){
+    } else if($textarea.val().trim().length){
       let data = $('textarea, .tweet-counter').serialize();
       $textarea.val('');
       $counter.text('140');
@@ -79,7 +79,7 @@ $(document).ready(function() {
   // Creates an ajax request to update the database after like button was clicked, reloads the tweeets database
   $('#tweets-container').on('click', '.fa-heart', function() {
     event.preventDefault();
-    let id = $(this).parents('.tweet').data("id");
+    let id = $(this).parents('.tweet').data('id');
     $.ajax({
       url: `/tweets/${id}/likes`,
       method: 'POST',

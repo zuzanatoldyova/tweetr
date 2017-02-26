@@ -7,10 +7,35 @@
 
 $(document).ready(function() {
   $('.new-tweet').toggle();
+  $('.login').toggle();
+  $('.register').toggle();
+  $('.compose').toggle();
+  $('.logout').toggle();
 
-  $('#nav-bar button').click(function () {
+  $('#nav-bar .compose').click(function () {
     $('.new-tweet').slideToggle();
     $('.new-tweet textarea').focus();
+  });
+
+  $('.login-button').click(function () {
+    $('.login').slideToggle();
+  });
+
+  $('.register-button').click(function () {
+    $('.register').slideToggle();
+  });
+
+  $('.logout').on('click', function() {
+    console.log('logging out');
+    $.ajax({
+      url:'/login',
+      method: 'DELETE'
+    }).then(function(data) {
+      toggleButtons();
+      console.log('Logged out');
+    }).catch(function(err) {
+      console.log(err);
+    })
   });
 
   // Creates an html element class tweet
@@ -50,6 +75,58 @@ $(document).ready(function() {
     });
   }
 
+  function toggleButtons(){
+    $('.logout').toggle();
+    $('.compose').toggle();
+    $('.register-button').toggle();
+    $('.login-button').toggle();
+  }
+
+  function getUser() {
+    $.ajax({
+      url: '/users',
+      method: 'GET'
+    }).then(function(data) {
+      console.log(data);
+    }).catch(function(err) {
+      console.log(err);
+    });
+  }
+
+  $('.container').on('submit', '.login', function() {
+    event.preventDefault();
+    let data = $('.login input').serialize();
+    $('.login input').val('');
+    $.ajax({
+      url: '/login',
+      method: 'POST',
+      data: data
+    }).then(function(data) {
+      toggleButtons();
+      getUser();
+      $('.login').toggle();
+    }).catch(function(err) {
+      console.log(err);
+    });
+  });
+
+  $('.container').on('submit', '.register', function() {
+    event.preventDefault();
+    let data = $('.register input').serialize();
+    console.log(data);
+    $('.register input').val('');
+    $.ajax({
+      url: '/users',
+      method: 'POST',
+      data: data
+    }).then(function(data) {
+      toggleButtons();
+      $('.register').toggle();
+    }).catch(function(err) {
+      console.log(err);
+    });
+  });
+
   // Validates a tweet text input and if it's valid creates an ajax request to post the tweet on the screen reloads all the tweets from database
   $('.new-tweet').on('submit', 'form', function() {
     event.preventDefault();
@@ -58,6 +135,7 @@ $(document).ready(function() {
     if ($counter.hasClass('red')) {
       alert('tweet is too long, maximum length is 140 characters');
     } else if($textarea.val().trim().length){
+      // getuser
       let data = $('textarea, .tweet-counter').serialize();
       $textarea.val('');
       $counter.text('140');

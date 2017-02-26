@@ -32,15 +32,57 @@
         <span class="header">Tweeter</span>
       </span>
       <span>
-        <button>
+        <button class="login-button">
+          Login
+        </button>
+
+        <button class="register-button">
+          Register
+        </button>
+
+        <button class="logout">
+          Log Out
+        </button>
+
+        <button class="compose">
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
           <span>Compose</span>
         </button>
+
       </span>
     </nav>
 
     <!-- Page-specific (main) content here -->
     <main class="container">
+      <form class="login">
+        <div>
+          <label for="email-field">E-mail:</label>
+          <input id="email-field" type="email" name="email" style="width: 300px">
+        </div>
+        <div>
+          <label for="password-field">Password:</label>
+          <input id="password-field" type="password" name="password" style="width: 300px">
+          </br>
+          <input type="submit" value="Submit" style="margin-top: 20px">
+        </div>
+      </form>
+      <form class="register">
+        <div>
+          <label for="email-field">E-mail:</label>
+          <input id="email-field" type="email" name="email" style="width: 300px">
+        </div>
+        <div>
+          <label for="password-field">Password:</label>
+          <input id="password-field" type="password" name="password" style="width: 300px">
+          <label for="name-field">User name:</label>
+          <input id="name-field" type="username" name="username" style="width: 300px">
+          <label for="handle">Handle:</label>
+          <input id="handle" type="handle" name="handle" style="width: 300px" value="@">
+          <!-- <label for="avatar">Avatar:</label>
+          <input id="avatar" type="avatar" name="avatar" style="width: 300px" value="@"> -->
+          <input type="submit" value="Submit" style="margin-top: 20px">
+        </div>
+      </form>
       <section class="new-tweet">
         <h2>Compose Tweet</h2>
         <form action="/tweets" method="POST">

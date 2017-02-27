@@ -29,6 +29,14 @@ app.use(sassMiddleware({
   outputStyle: 'compressed',
   prefix: '/styles'
 }));
+
+// function cookieCheck(req, res, next) {
+//   if (req.session.userId) {
+//
+//   }
+//   next();
+// }
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -38,6 +46,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   app.use('/tweets', tweetsRoutes(DataHelpers(db)));
   app.use('/users', usersRoutes(UserHelpers(db)));
+
 
   app.post('/login', (req, res) => {
     if(!req.body) {

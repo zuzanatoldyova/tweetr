@@ -9,7 +9,6 @@
 $(document).ready(function() {
   $('.new-tweet').toggle();
 
-  
   $('.login').toggle();
   $('.register').toggle();
   $('.compose').toggle();
@@ -28,18 +27,6 @@ $(document).ready(function() {
     $('.register').slideToggle();
   });
 
-  $('.logout').on('click', function() {
-    console.log('logging out');
-    $.ajax({
-      url:'/login',
-      method: 'DELETE'
-    }).then(function(data) {
-      toggleButtons();
-      console.log('Logged out');
-    }).catch(function(err) {
-      console.log(err);
-    })
-  });
 
   // Creates an html element class tweet
   function createTweetElement(tweetData) {
@@ -133,6 +120,20 @@ $(document).ready(function() {
     });
   });
 
+  // loggs out a user, clears cookie session
+  $('.logout').on('click', function() {
+    console.log('logging out');
+    $.ajax({
+      url:'/login',
+      method: 'DELETE'
+    }).then(function(data) {
+      toggleButtons();
+      console.log('Logged out');
+    }).catch(function(err) {
+      console.log(err);
+    })
+  });
+
   // Validates a tweet text input and if it's valid creates an ajax request to post the tweet on the screen reloads all the tweets from database
   $('.new-tweet').on('submit', 'form', function() {
     event.preventDefault();
@@ -160,7 +161,8 @@ $(document).ready(function() {
           $('#tweets-container').empty();
           loadTweets();
         }).catch(function(err) {
-          alert('An error occured', err);
+          console.log(err);
+          alert('An error occured');
         });
       });
     } else {
@@ -180,10 +182,12 @@ $(document).ready(function() {
       $('#tweets-container').empty();
       loadTweets();
     }).catch(function(err) {
-      alert('An error occured', err);
+      console.log(err);
+      alert('An error occured: ' + err.responseText);
     });
   });
 
   // Initial load of the tweets
   loadTweets();
+
 });

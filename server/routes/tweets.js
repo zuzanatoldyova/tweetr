@@ -29,7 +29,8 @@ module.exports = function(DataHelpers) {
         text: req.body.text
       },
       created_at: Date.now(),
-      likes: 0
+      likes: 0,
+      likedby: []
     };
 
     DataHelpers.saveTweet(tweet, (err, result) => {
@@ -42,15 +43,20 @@ module.exports = function(DataHelpers) {
   });
 
   tweetsRoutes.post('/:id/likes', function(req, res) {
-    if (!req.body.id) {
+    if (!req.body.id ) {
       res.status(400).json({ error: 'invalid request: no data in PUT body'});
       return;
     }
-    DataHelpers.likeTweet(req.body.id, (err, result) =>{
+    if(!req.session.userId) {
+      res.status(400).json({error: 'you must be logged in to like tweets'});
+      return;
+    }
+    let id = req.session.userId;
+    DataHelpers.likeTweet(req.body.id, id, (err, result) =>{
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        res.status(201).send();
+        res.status(201).json(result);
       }
     });
 

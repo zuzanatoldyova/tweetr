@@ -15,19 +15,26 @@ module.exports = function makeDataHelpers(db) {
       db.collection('tweets').find().toArray(callback);
     },
 
-    // Updates tweetlikes according to if it's already been liked or not
-    likeTweet: function(tweetId, callback){
+    // Updates tweetlikes according to if it's already been liked by signed in user or not
+    likeTweet: function(tweetId, userId, callback){
       let delta = 1;
       db.collection('tweets').find({_id: ObjectId(tweetId)}).toArray((err, result) => {
-        if(result[0].likes > 0) {
+        if(result[0].likedby.includes(userId)) {
           delta = -1;
+          db.collection('tweets').update(
+            { _id: ObjectId(tweetId) },
+            { $inc: { likes: delta },
+              $pull: { likedby: userId }
+            });
+          callback(null, result[0])
+        } else {
+          db.collection('tweets').update(
+            { _id: ObjectId(tweetId) },
+            { $inc: { likes: delta },
+              $push: { likedby: userId }
+            });
+          callback(null, result[0])
         }
-        db.collection('tweets').update(
-          {_id: ObjectId(tweetId)},
-          { $inc: { likes: delta } },
-          null,
-          callback
-        );
       });
     }
   };

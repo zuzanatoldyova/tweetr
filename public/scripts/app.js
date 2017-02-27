@@ -7,6 +7,10 @@
  */
 
 $(document).ready(function() {
+  if ($('#nav-bar').data()) {
+    createUser();
+  }
+
   $('.new-tweet').toggle();
 
   $('.login').toggle();
@@ -27,6 +31,28 @@ $(document).ready(function() {
     $('.register').slideToggle();
   });
 
+  function createUser(userData) {
+    if (!userData) {
+      $('#nav-bar').removeData();
+      $('#nav-bar .buttons p').remove();
+      return;
+    }
+    $('#nav-bar').data('user', userData.handle);
+    let $loggedin = $('#nav-bar').data('user');
+    $('#nav-bar .buttons').append($('<p>').text($loggedin));
+    toggleButtons();
+  }
+
+  // function retrieveUser(){
+  //   $.ajax({
+  //     url: '/users'
+  //     method: 'GET'
+  //   }).then(function(data){
+  //     createUser(data);
+  //   }).catch(function(err){
+  //     console.log(err.responseText);
+  //   });
+  // }
 
   // Creates an html element class tweet
   function createTweetElement(tweetData) {
@@ -94,8 +120,7 @@ $(document).ready(function() {
       method: 'POST',
       data: data
     }).then(function(data) {
-      toggleButtons();
-      getUser(x => {console.log(x)});
+      createUser(data);
       $('.login').toggle();
     }).catch(function(err) {
       console.log(err);
@@ -128,6 +153,8 @@ $(document).ready(function() {
       method: 'DELETE'
     }).then(function(data) {
       toggleButtons();
+      $('#nav-bar').removeData();
+      createUser(null);
       console.log('Logged out');
     }).catch(function(err) {
       console.log(err);
@@ -187,7 +214,8 @@ $(document).ready(function() {
     });
   });
 
-  // Initial load of the tweets
+  // Initial load of the tweets and user
   loadTweets();
+  getUser(createUser);
 
 });

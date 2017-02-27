@@ -1,7 +1,10 @@
+@import "_mixins.scss";
+@import "_variables.scss";
+
 #nav-bar {
   align-items: center;
   background: #00a087;
-  color: #e8fdff;
+  color: $light-green;
   display: flex;
   flex-direction: row;
   height: 80px;
@@ -17,7 +20,7 @@
   button {
     border-radius: 5px;
     border: solid 1px #000000;
-    background-color: #e8fdff;
+    background-color: $light-green;
     color: #00a087;
     font-size: 16px;
     padding: 0.5em;

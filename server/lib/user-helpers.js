@@ -17,7 +17,7 @@ module.exports = function makeUserHelpers(db) {
     authenticateUser: function(login, callback) {
       db.collection('users').find({email: login.email}).toArray((err, result) => {
         if (result[0]) {
-          callback(null,result[0]);
+          callback(null, result[0]);
         } else {
           callback('username or password are icorrect');
         }

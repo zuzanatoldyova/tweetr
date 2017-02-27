@@ -58,7 +58,6 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
       } else if (result.password === login.password) {
         req.session.userId = result._id;
         res.status(201).send();
-        console.log(result);
       } else {
         res.status(400).json({error: 'username or password are icorrect' });
       }

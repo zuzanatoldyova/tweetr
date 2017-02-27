@@ -1,4 +1,5 @@
 'use strict';
+
 /*
  * Client-side JS logic goes here
  * jQuery is already loaded
@@ -7,6 +8,8 @@
 
 $(document).ready(function() {
   $('.new-tweet').toggle();
+
+  
   $('.login').toggle();
   $('.register').toggle();
   $('.compose').toggle();
@@ -82,17 +85,19 @@ $(document).ready(function() {
     $('.login-button').toggle();
   }
 
-  function getUser() {
+  function getUser(callback) {
     $.ajax({
       url: '/users',
       method: 'GET'
     }).then(function(data) {
-      console.log(data);
-    }).catch(function(err) {
+      callback(data);
+    }
+  ).catch(function(err) {
       console.log(err);
     });
   }
 
+  // event logging in of a user
   $('.container').on('submit', '.login', function() {
     event.preventDefault();
     let data = $('.login input').serialize();
@@ -103,13 +108,14 @@ $(document).ready(function() {
       data: data
     }).then(function(data) {
       toggleButtons();
-      getUser();
+      getUser(x => {console.log(x)});
       $('.login').toggle();
     }).catch(function(err) {
       console.log(err);
     });
   });
 
+  // event of registration of a user
   $('.container').on('submit', '.register', function() {
     event.preventDefault();
     let data = $('.register input').serialize();
@@ -135,19 +141,27 @@ $(document).ready(function() {
     if ($counter.hasClass('red')) {
       alert('tweet is too long, maximum length is 140 characters');
     } else if($textarea.val().trim().length){
-      // getuser
-      let data = $('textarea, .tweet-counter').serialize();
+      let text = $('textarea').serialize();
+      // clearing a form
       $textarea.val('');
       $counter.text('140');
-      $.ajax({
-        url: '/tweets',
-        method: 'POST',
-        data: data
-      }).then(function(data) {
-        $('#tweets-container').empty();
-        loadTweets();
-      }).catch(function(err) {
-        alert('An error occured', err);
+      // only logged in users can post tweets, retrieving information about logged in user
+      getUser(x => {
+        let queryUser = {};
+        queryUser.user = x;
+        let user = jQuery.param(queryUser);
+        let data = `${text}&${user}`;
+        // request posting a tweet, send parameters user and text
+        $.ajax({
+          url: '/tweets',
+          method: 'POST',
+          data: data
+        }).then(function(data) {
+          $('#tweets-container').empty();
+          loadTweets();
+        }).catch(function(err) {
+          alert('An error occured', err);
+        });
       });
     } else {
       alert('tweet is empty');

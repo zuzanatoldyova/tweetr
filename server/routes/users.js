@@ -40,7 +40,6 @@ module.exports = function(UserHelpers) {
        console.log("user not logged in");
      } else {
        let id = req.session.userId;
-       console.log(id);
        UserHelpers.getUser(id, (err, result) => {
           if (err) {
              res.status(500).json({error: err.message});
@@ -52,7 +51,6 @@ module.exports = function(UserHelpers) {
                 small: result.avatar
               }
             };
-            console.log(user);
             res.json(user);
           }
        });

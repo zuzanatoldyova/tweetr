@@ -1,13 +1,5 @@
 'use strict';
 
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
-
-
-
 $(document).ready(function() {
 
   $('.new-tweet').toggle();
@@ -30,7 +22,6 @@ $(document).ready(function() {
     $('.register').slideToggle();
   });
 
-
   function toggleButtons(){
     $('.logout').toggle();
     $('.compose').toggle();
@@ -40,13 +31,10 @@ $(document).ready(function() {
 
   function createUser(userData) {
     if (!userData) {
-      $('#nav-bar').removeData();
       $('#nav-bar .buttons p').remove();
       return;
     }
-    $('#nav-bar').data('user', userData.handle);
-    let $loggedin = $('#nav-bar').data('user');
-    $('#nav-bar .buttons').append($('<p>').text($loggedin));
+    $('#nav-bar .buttons').append($('<p>').text(userData.handle));
     toggleButtons();
   }
 
@@ -86,7 +74,6 @@ $(document).ready(function() {
       alert('An error occured on loadTweets', err);
     });
   }
-
 
   function getUser(callback) {
     $.ajax({

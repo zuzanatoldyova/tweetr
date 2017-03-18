@@ -11,7 +11,7 @@ module.exports = function makeUserHelpers(db) {
     },
 
     getUser: function(userId, callback) {
-      db.collection('users').find({_id: ObjectId(userId)}).toArray((err, result) => callback(err,result[0]));
+      db.collection('users').find({_id: ObjectId(userId)}).toArray((err, result) => callback(err, result[0]));
     },
 
     authenticateUser: function(login, callback) {
@@ -23,5 +23,5 @@ module.exports = function makeUserHelpers(db) {
         }
       });
     }
-  }
+  };
 };

@@ -1,11 +1,10 @@
 'use strict';
 
-const UserHelpers    = require('../lib/user-helpers.js');
 const express        = require('express');
 const usersRoutes    = express.Router();
 const md5 = require('md5');
 
-module.exports = function(UserHelpers) {
+module.exports = UserHelpers => {
   usersRoutes.post('/', function(req, res) {
     if (!req.body) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});

@@ -5,7 +5,6 @@ var ObjectId = require('mongodb').ObjectId;
 module.exports = function makeUserHelpers(db) {
   return {
 
-    // Saves a user to `db`
     saveUser: function(user, callback) {
       db.collection('users').insertOne(user, callback);
     },

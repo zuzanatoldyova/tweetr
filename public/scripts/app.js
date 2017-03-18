@@ -29,7 +29,7 @@ $(document).ready(function() {
     $('.login-button').toggle();
   }
 
-  function createUser(userData) {
+  function loadUser(userData) {
     if (!userData) {
       $('#nav-bar .buttons p').remove();
       return;
@@ -91,12 +91,12 @@ $(document).ready(function() {
     let data = $('.login input').serialize();
     $('.login input').val('');
     $.ajax({
-      url: '/login',
+      url: '/sessions',
       method: 'POST',
       data: data
     }).then(function(data) {
       $('.login').toggle();
-      createUser(data);
+      loadUser(data);
     }).catch(function(err) {
       console.log(err);
     });
@@ -113,7 +113,7 @@ $(document).ready(function() {
       data: data
     }).then(function(data) {
       $('.register').toggle();
-      createUser(data);
+      loadUser(data);
     }).catch(function(err) {
       console.log(err);
     });
@@ -122,12 +122,12 @@ $(document).ready(function() {
   $('.logout').on('click', function() {
     console.log('logging out');
     $.ajax({
-      url: '/login',
+      url: '/sessions',
       method: 'DELETE'
     }).then(function(data) {
       toggleButtons();
       $('#nav-bar').removeData();
-      createUser(null);
+      loadUser(null);
       console.log('Logged out');
     }).catch(function(err) {
       console.log(err);
@@ -176,6 +176,6 @@ $(document).ready(function() {
   });
 
   loadTweets();
-  getUser(createUser);
+  getUser(loadUser);
 
 });
